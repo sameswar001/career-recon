@@ -40,5 +40,5 @@ class AgentState(TypedDict):
     gaps: NotRequired[list[str]]
     draft: NotRequired[str]
     critique: NotRequired[Critique]
-    human_feedback: NotRequired[list[str]]
-    approved: NotRequired[list[bool]]
+    human_feedback: NotRequired[str]
+    approved: NotRequired[bool]
