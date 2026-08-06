@@ -11,7 +11,7 @@ graph and not a linear script.
 > output varies by provider and by day.
 
 ```
-$ python cli.py start --company "Acme Robotics" \
+$ python entrypoint/cli.py start --company "Acme Robotics" \
     --job-posting jd.txt --resume resume.txt
 
 Starting run (thread_id: 7c1f...e9)
