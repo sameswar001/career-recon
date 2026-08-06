@@ -68,7 +68,7 @@ docs/             sample run walkthrough
 ## Usage
 
 ```bash
-python cli.py start --company "Acme Corp" --job-posting jd.txt --resume resume.txt
+python entrypoint/cli.py start --company "Acme Corp" --job-posting jd.txt --resume resume.txt
 ```
 
 Pauses for your approval when the draft is ready. If you exit before
@@ -76,7 +76,7 @@ approving, the run is checkpointed in career_recon.db — pick it back up
 without repeating the research or writing:
 
 ```bash
-python cli.py resume --thread-id <the-thread-id-printed-at-start>
+python entrypoint/cli.py resume --thread-id <the-thread-id-printed-at-start>
 ```
 
 ## Setup
