@@ -95,4 +95,4 @@ Environment variables:
 | `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` | Only if using that provider | — | Cloud provider auth |
 
 Ollama (the default) needs a local server running (`ollama serve`) with the
-model pulled (`ollama pull llama3.1`).
+model pulled (`ollama pull llama3.2:latest`).
