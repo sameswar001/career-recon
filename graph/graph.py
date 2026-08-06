@@ -7,6 +7,7 @@ stage — this file exists to prove the graph's shape (fan-out/fan-in,
 conditional routing, cycles) before any real node logic is written.
 """
 
+from langgraph.checkpoint.base import BaseCheckpointSaver
 from langgraph.graph import END, START, StateGraph
 from nodes.critic import critic_node, route_after_critic
 from nodes.gap_analyst import gap_analyst_node
@@ -16,7 +17,7 @@ from nodes.writer import writer_node
 from state import AgentState
 
 
-def build_graph():
+def build_graph(checkpointer: BaseCheckpointSaver | None = None):
     graph = StateGraph(AgentState)
 
     graph.add_node("researcher", researcher_node)
@@ -39,4 +40,4 @@ def build_graph():
         {"finalize": END, "writer": "writer"},
     )
 
-    return graph.compile()
+    return graph.compile(checkpointer=checkpointer)
