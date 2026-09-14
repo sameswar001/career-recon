@@ -90,6 +90,17 @@ without repeating the research or writing:
 python entrypoint/cli.py resume --thread-id <the-thread-id-printed-at-start>
 ```
 
+## Testing
+
+```bash
+uv run pytest
+```
+
+Unit tests cover every node (`researcher`, `gap_analyst`, `writer`, `critic`,
+`human_review`) plus the CLI's start/resume loop, with the LLM and Tavily mocked,
+so they run in CI with no API keys. `tests/test_graph_skeleton.py` is a live
+end-to-end run through the real graph and skips itself unless `TAVILY_API_KEY` is set.
+
 ## Setup
 
 ```bash
