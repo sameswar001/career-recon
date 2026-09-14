@@ -14,7 +14,6 @@ from pydantic import BaseModel
 from core.llm import get_llm
 from state import AgentState, ResearchNote
 
-
 MAX_ITERATIONS = 3
 
 CRITIC_PROMPT = """Check this draft interview-prep brief for grounding.

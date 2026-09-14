@@ -1,30 +1,40 @@
 # career-recon
 
+[![CI](https://github.com/sameswar001/career-recon/actions/workflows/ci.yml/badge.svg)](https://github.com/sameswar001/career-recon/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+
 Multi-agent system built with LangGraph. Given a target company and a job
 posting, it researches the company, diffs the posting against a resume for
 real gaps, and drafts an interview-prep brief — with a grounding critic that
 rejects unsupported claims and loops the draft back for revision, and a
 human-approval checkpoint before anything is finalized.
 
+The domain is deliberately outside QA and legal: it's a general agent-orchestration
+problem (parallel tools, self-critique loops, human-in-the-loop persistence), built
+to show AI-engineering range beyond evaluation work.
+
 ## Architecture
 
-```
-Input (company + JD + resume)
-        |
-        v
-Researcher & analyst (parallel: web search + resume diff)
-        |
-        v
-Writer (drafts the prep brief)
-        |
-        v
-Critic (checks grounding) -----> ↻ revises via writer
-        |
-        v
-Human review (approve or changes) -----> ↻ requests changes (back to writer)
-        |
-        v
-Output (final prep brief)
+```mermaid
+flowchart TD
+    input["Input<br/>company + JD + resume"]
+    researcher["Researcher<br/>web search"]
+    analyst["Gap analyst<br/>resume vs. JD"]
+    writer["Writer<br/>drafts the prep brief"]
+    critic{"Critic<br/>grounded?"}
+    human{"Human review<br/>approve?"}
+    output["Output<br/>final prep brief"]
+
+    input --> researcher & analyst
+    researcher --> writer
+    analyst --> writer
+    writer --> critic
+    critic -- "ungrounded (under iteration cap)" --> writer
+    critic -- "grounded / cap reached" --> human
+    human -- "requests changes" --> writer
+    human -- "approved" --> output
 ```
 
 State (`state.py`) is a shared `TypedDict` carrying `company`, `job_posting`,
@@ -63,6 +73,7 @@ nodes/            researcher, gap_analyst, writer, critic, human_review
 tools/            web_search (Tavily)
 tests/            per-node unit tests (mocked) + one gated live e2e run
 docs/             sample run walkthrough
+.github/workflows CI: ruff + mocked unit tests on every push
 ```
 
 ## Usage

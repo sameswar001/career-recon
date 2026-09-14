@@ -12,8 +12,6 @@ import os
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 
-
-
 DEFAULT_MODELS = {
     "ollama": "llama3.2:latest",
     "anthropic": "claude-sonnet-4-6",

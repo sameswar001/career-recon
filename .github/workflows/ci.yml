@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Run unit tests
+        run: uv run pytest -q
+
+  # Notes:
+  # - Every node test mocks the LLM and Tavily, so this job needs no secrets
+  #   and costs nothing to run on every push.
+  # - The live end-to-end run (tests/test_graph_skeleton.py) skips itself when
+  #   TAVILY_API_KEY is unset, which is always the case here.

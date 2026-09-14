@@ -7,10 +7,8 @@ monkeypatch search_company and never need a real TAVILY_API_KEY.
 
 import os
 
-from tavily import TavilyClient
-
 from dotenv import load_dotenv
-
+from tavily import TavilyClient
 
 DEFAULT_MAX_RESULTS = 5
 
